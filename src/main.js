@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs/promises'),
     logFactory = require('./modules/logFactory.js');
 
