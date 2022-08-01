@@ -18,6 +18,7 @@ function createLogger(name) {
 }
 
 module.exports = {
+    create: createLogger,
     createLogger: createLogger,
     enable: enable
 };
