@@ -8,7 +8,7 @@ const DEV_FILE = '/dev/rpmsg_pru30';
 (async ()=>{
     const commands = ['0 255 0 0\n', '-1 0 0 0\n'];
     commands.forEach(c => {
-        fs.writeFile(DEV_FILE, commands[i], {flag: 'a'}, (err)=>{
+        fs.writeFile(DEV_FILE, c, {flag: 'a'}, (err)=>{
             log.error(err);
         });
     });
