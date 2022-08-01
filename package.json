@@ -1,0 +1,36 @@
+{
+  "name": "bbb-hambone-animations-node",
+  "version": "1.0.0",
+  "description": "Animations using Nodejs for Hambone project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scirelli/bbb-hambone-animations-node.git"
+  },
+  "keywords": [
+    "hambone",
+    "PRU",
+    "beaglebone",
+    "black"
+  ],
+  "author": "Steve Cirelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scirelli/bbb-hambone-animations-node/issues"
+  },
+  "homepage": "https://github.com/scirelli/bbb-hambone-animations-node#readme",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.18.9",
+    "eslint": "^8.21.0"
+  },
+  "dependencies": {
+    "debug": "^4.3.4"
+  },
+    "engines": {
+        "node": ">=v16.8.0",
+        "npm": ">=8.15.1"
+    }
+}
