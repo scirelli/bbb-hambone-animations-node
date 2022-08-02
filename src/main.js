@@ -5,7 +5,7 @@ const logFactory = require('./modules/logFactory.js'),
     CCKDisplay = require('./modules/CCKDisplay.js'),
     Demo = require('./Demo.js');
 
-const log = logFactory.create('BBB');
+const log = logFactory.create('Demo');
 const config = require('../config.json');  //TODO: Convert main.js to use yargs
 
 //const DEV_FILE = '/dev/rpmsg_pru30';
