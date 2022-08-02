@@ -1,6 +1,6 @@
 const logFactory = require('./logFactory.js'),
     {NeoPixelPRU} = require('./NeoPixel-PRU.js'),
-    {HSVtoRGB, RED, GREEN, BLUE} = require('./Color.js'),
+    {HSVtoRGB} = require('./Color.js'),
     {setInterval} =  require('timers/promises');
 
 const DEFAULT_LOGGER = logFactory.create('CCKDisplay');
@@ -97,7 +97,7 @@ module.exports = class CCKDisplay{
                 break;
             }
             let rgb = CCKDisplay.fadeGreenDownToRed(dt/timeMs);
-            self.allSegmentsOn(RED(rgb), GREEN(rgb), BLUE(rgb));
+            self.allSegmentsOn(rgb.r, rgb.b. rgb.g);
         }
     }
 
