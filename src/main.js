@@ -61,6 +61,6 @@ let cck = new CCKDisplay(config.cckConfig);
     },
     async function Cleanup() {
         log.info('Clean up.');
-        return setTimeout(0).then(cck.allSegmentsOff);
+        return setTimeout(0).then(cck.allSegmentsOff.bind(cck));
     }
 ].chain((f, i)=>f(i));
