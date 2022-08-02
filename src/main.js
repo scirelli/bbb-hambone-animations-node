@@ -60,6 +60,7 @@ let cck = new CCKDisplay(config.cckConfig);
         return cck.checkRetractTimer(TOTAL_ANIMATION_TIME);
     },
     async function Cleanup() {
+        log.info('Clean up.');
         return setTimeout(0).then(cck.allSegmentsOff);
     }
 ].chain((f, i)=>f(i));
