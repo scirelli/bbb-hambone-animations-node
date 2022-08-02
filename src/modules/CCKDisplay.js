@@ -61,6 +61,7 @@ module.exports = class CCKDisplay{
         let on = true,
             self = this;
 
+        timeMs = parseFloat(timeMs) || 0;
         self.allSegmentsOn(...CCKDisplay.COLORS.RED);
         for await (const startTimeMs of setInterval(CCKDisplay.FLASH_RATE_MS, Date.now())) {
             on = !on;
@@ -88,6 +89,7 @@ module.exports = class CCKDisplay{
         // Countdown animation
         // Animation goes from all Green to yellow to red. Red represents time out.
         let self = this;
+        timeMs = parseFloat(timeMs) || 0;
         for await (const startTimeMs of setInterval(100, Date.now())) {
             let dt = Date.now() - startTimeMs;
             if (dt >= timeMs) {
@@ -103,6 +105,7 @@ module.exports = class CCKDisplay{
         let on = true,
             self = this;
 
+        timeMs = parseFloat(timeMs) || 0;
         self.setSegment(segmentIndex, r, g, b);
         for await (const startTimeMs of setInterval(CCKDisplay.FLASH_RATE_MS, Date.now())) {
             on = !on;
