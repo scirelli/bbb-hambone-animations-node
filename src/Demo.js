@@ -54,8 +54,7 @@ module.exports = class Demo{
                 //self.allSegmentsOff();
                 break;
             }
-            let rgb = CCKDisplay.fadeGreenDownToRed(1 - (dt/timeMs));
-            self.cck.setAllSegmentsColor(rgb.r, rgb.g, rgb.b);
+            self.cck.presenterTimeoutPercentage(1 - (dt/timeMs));
         }
     }
 
