@@ -75,13 +75,13 @@ module.exports = class CCKDisplay{
     }
 
     async presenterFlashing(r, g, b, timeMs) {
-        this.segmentFlashing(CCKDisplay.presenterSegmentIndex, timeMs, r, g, b);
+        return this.segmentFlashing(CCKDisplay.presenterSegmentIndex, timeMs, r, g, b);
     }
     async displayFlashing(r, g, b, timeMs) {
-        this.segmentFlashing(CCKDisplay.displaySegmentIndex, timeMs, r, g, b);
+        return this.segmentFlashing(CCKDisplay.displaySegmentIndex, timeMs, r, g, b);
     }
     async scannerFlashing(r, g, b, timeMs) {
-        this.segmentFlashing(CCKDisplay.scannerSegmentIndex, timeMs, r, g, b);
+        return this.segmentFlashing(CCKDisplay.scannerSegmentIndex, timeMs, r, g, b);
     }
 
     async checkRetractTimer() {
