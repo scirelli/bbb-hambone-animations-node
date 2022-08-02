@@ -64,13 +64,12 @@ module.exports = class CCKDisplay{
         for await (const startTimeMs of setInterval(CCKDisplay.FLASH_RATE_MS, Date.now())) {
             on = !on;
 
-            if(on) self.allSegmentsOn(...CCKDisplay.COLORS.RED);
-            else self.allSegmentsOff();
-
             if ((Date.now() - startTimeMs) >= timeMs) {
                 self.allSegmentsOff();
                 break;
             }
+            if(on) self.allSegmentsOn(...CCKDisplay.COLORS.RED);
+            else self.allSegmentsOff();
         }
     }
 
@@ -98,13 +97,12 @@ module.exports = class CCKDisplay{
         for await (const startTimeMs of setInterval(CCKDisplay.FLASH_RATE_MS, Date.now())) {
             on = !on;
 
-            if(on) self.setSegment(segmentIndex, r, g, b);
-            else self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
-
             if ((Date.now() - startTimeMs) >= timeMs) {
                 self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
                 break;
             }
+            if(on) self.setSegment(segmentIndex, r, g, b);
+            else self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
         }
     }
 
