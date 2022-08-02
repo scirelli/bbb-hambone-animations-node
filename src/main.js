@@ -10,10 +10,10 @@ const config = require('../config.json');  //TODO: Convert main.js to use yargs
 
 //const DEV_FILE = '/dev/rpmsg_pru30';
 const TWO_SECONDS = 2 * 1000,
-    FIVE_SECONDS = 5 * 1000,
+    //FIVE_SECONDS = 5 * 1000,
     TEN_SECONDS = 10 * 1000,
     TOTAL_FLASH_TIME = TEN_SECONDS,
-    TOTAL_ANIMATION_TIME = FIVE_SECONDS;
+    TOTAL_ANIMATION_TIME = TEN_SECONDS;
 
 config.cckConfig.logger = log;
 let cck = new CCKDisplay(config.cckConfig);
