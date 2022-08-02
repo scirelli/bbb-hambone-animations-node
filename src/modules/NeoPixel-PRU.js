@@ -77,7 +77,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU{
         return this;
     }
 
-    setSegment(index, r, g, b) {
+    setSegmentBuffer(index, r, g, b) {
         if(!this.isValidSegmentIndex(index)) {
             this.log.warn(new Error('Invalid segment index'));
             return this;
@@ -87,6 +87,12 @@ module.exports.NeoPixelPRU = class NeoPixelPRU{
             r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
         this.write(`${index + this.segmentStartIndex} ${r} ${g} ${b}`);
+        return this;
+    }
+
+    setSegment(index, r, g, b) {
+        this.setSegmentBuffer(index, r, g, b);
+        this.draw();
         return this;
     }
 
