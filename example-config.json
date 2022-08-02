@@ -1,0 +1,10 @@
+{
+  "cckConfig": {
+    "neoPixelConfig": {
+      "_fileName": "/dev/rpmsg_pru30",
+      "fileName": "/tmp/rpmsg_pru30.txt",
+      "fileMode": "a",
+      "ledCount": 42
+    }
+  }
+}

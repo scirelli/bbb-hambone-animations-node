@@ -1,33 +1,20 @@
 const fs = require('fs'),
     logFactory = require('./logFactory.js'),
-    {setTimeout} =  require('timers/promises');
+    {Color} = require('./Color.js');
 
 
 const DEFAULT_LOGGER = logFactory.create('NEOPIXEL'),
-    DEFAULT_LED_COUNT = 42,
+    DEFAULT_LED_COUNT = 42, // Defined in PRU. This is the max number of LEDs unless changed in PRU firmware.
     DEFAULT_FILE_MODE = 'w',
     DEFAULT_DEV_FILE = '/dev/rpmsg_pru30',
-    SEGMENT_COUNT = 4,
-    SEGMENT_ALL = 0,
-    SEGMENT_ONE = 1,
-    SEGMENT_TWO = 2,
-    SEGMENT_THREE = 3;
+    SEGMENT_COUNT = 4,      // Defined in PRU
+    SEGMENT_ALL = 0,        // Defined in PRU
+    SEGMENT_ONE = 1,        // Defined in PRU
+    SEGMENT_TWO = 2,        // Defined in PRU
+    SEGMENT_THREE = 3;      // Defined in PRU
 
-class Color {
-    constructor(r=0, g=0, b=0) {
-        this.r = parseFloat(r) || 0.0;
-        this.g = parseFloat(g) || 0.0;
-        this.b = parseFloat(b) || 0.0;
-    }
 
-    toString() {
-        return `${Math.floor(this.r)} ${Math.floor(this.g)} ${Math.floor(this.b)}`;
-    }
-};
-module.exports.Color = Color;
-
-module.exports.NeoPixelPRU = class NeoPixelPRU {
-    static Color = Color;
+module.exports.NeoPixelPRU = class NeoPixelPRU{
     static SEGMENT_COUNT = SEGMENT_COUNT;
     static SEGMENT_ALL = SEGMENT_ALL;
     static SEGMENT_ONE = SEGMENT_ONE;
@@ -44,7 +31,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         this.segmentStartIndex = this.ledCount + this.ledCount;
         this.segmentOneIndex = this.segmentStartIndex;
     }
-    
+
     setLogger(logger) {
         this.logger = logger;
         return this;
@@ -55,7 +42,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
             this.log.warn(new Error('Index out of range.'));
             return this;
         }
-        if(r instanceof Color){
+        if(r instanceof Color) {
             let c = r;
             r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
@@ -64,7 +51,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         return this;
     }
 
-    setColor(index, r, g, b) {
+    setColor(/*index, r, g, b*/) {
         this.setColorBuffer.apply(this, arguments);
         this.draw();
         return this;
@@ -75,7 +62,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
             this.log.warn(new Error('Index out of range.'));
             return this;
         }
-        if(r instanceof Color){
+        if(r instanceof Color) {
             let c = r;
             r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
@@ -84,14 +71,14 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         return this;
     }
 
-    setDestinationColor(index, r, g, b) {
+    setDestinationColor(/*index, r, g, b*/) {
         this.setDestinationColorBuffer.apply(this, arguments);
         this.draw();
         return this;
     }
 
     setSegment(index, r, g, b) {
-        if(!isValidSegmentIndex(index)) {
+        if(!this.isValidSegmentIndex(index)) {
             this.log.warn(new Error('Invalid segment index'));
             return this;
         }
@@ -99,7 +86,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
             let c = r;
             r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
-        this.write(`${index} ${r} ${g} ${b}`);
+        this.write(`${index + this.segmentStartIndex} ${r} ${g} ${b}`);
         return this;
     }
 

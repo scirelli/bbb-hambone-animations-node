@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run": "node src/main.js",
-    "debugInChrome": "NODE_TLS_REJECT_UNAUTHORIZED=0 DEBUG=* node --inspect-brk src/main.js"
+    "debugInChrome": "NODE_TLS_REJECT_UNAUTHORIZED=0 DEBUG=* node --inspect-brk src/main.js",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "repository": {
     "type": "git",
@@ -35,5 +37,98 @@
   "engines": {
     "node": ">=v16.8.0",
     "npm": ">=8.15.1"
+  },
+  "babel": {},
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es2020": true,
+      "browser": false,
+      "node": true,
+      "jasmine": true
+    },
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "globals": {},
+    "rules": {
+      "indent": [
+        "error",
+        4,
+        {
+          "SwitchCase": 1,
+          "VariableDeclarator": {
+            "var": 1,
+            "let": 1,
+            "const": 1
+          },
+          "outerIIFEBody": 1,
+          "MemberExpression": 1,
+          "ObjectExpression": 1
+        }
+      ],
+      "key-spacing": [
+        "error",
+        {
+          "beforeColon": false,
+          "afterColon": true,
+          "align": {
+            "on": "value"
+          }
+        }
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "new-parens": "error",
+      "eqeqeq": "error",
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "no-trailing-spaces": "error",
+      "space-before-blocks": [
+        "error",
+        {
+          "functions": "always",
+          "keywords": "always",
+          "classes": "never"
+        }
+      ],
+      "comma-dangle": "error",
+      "comma-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "ignore",
+          "named": "never"
+        }
+      ],
+      "no-console": [
+        "warn",
+        {
+          "allow": [
+            "warn",
+            "error",
+            "log"
+          ]
+        }
+      ],
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
   }
 }

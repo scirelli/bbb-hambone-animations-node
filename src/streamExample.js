@@ -6,7 +6,6 @@ const fs = require('fs'),
 
 const log = logFactory.create('BBB');
 const DEV_FILE = '/dev/rpmsg_pru30';
-const commands = ['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0'];
 const file = fs.createWriteStream(DEV_FILE);
 
 ['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0', '0 0 0 0', '1 0 0 0', '-1 0 0 0'].forEach(c=>{
@@ -14,5 +13,6 @@ const file = fs.createWriteStream(DEV_FILE);
 });
 
 setTimeout(10000).then(()=>{
+    log.info('done');
     file.end();
 });
