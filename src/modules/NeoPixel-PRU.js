@@ -50,7 +50,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         return this;
     }
 
-    setColor(index, r, g, b) {
+    setColorBuffer(index, r, g, b) {
         if(!this.isValidDisplayIndex(index)) {
             this.log.warn(new Error('Index out of range.'));
             return this;
@@ -64,7 +64,13 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         return this;
     }
 
-    setDestinationColor(index, r, g, b) {
+    setColor(index, r, g, b) {
+        this.setColorBuffer.apply(this, arguments);
+        this.draw();
+        return this;
+    }
+
+    setDestinationColorBuffer(index, r, g, b) {
         if(!this.isValidDisplayIndex(index)) {
             this.log.warn(new Error('Index out of range.'));
             return this;
@@ -75,6 +81,12 @@ module.exports.NeoPixelPRU = class NeoPixelPRU {
         }
 
         this.write(`${this.colorDestinationBufferIndex + index} ${r} ${g} ${b}`);
+        return this;
+    }
+
+    setDestinationColor(index, r, g, b) {
+        this.setDestinationColorBuffer.apply(this, arguments);
+        this.draw();
         return this;
     }
 

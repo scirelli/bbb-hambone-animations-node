@@ -16,9 +16,7 @@ let np = new NeoPixelPRU({
 });
 
 np.setColor(0, 255, 0, 0);
-np.draw();
 
 setTimeout(5000).then(()=>{
     np.setColor(0, 0, 0, 0);
-    np.draw();
 });
