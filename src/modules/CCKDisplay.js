@@ -1,5 +1,6 @@
 const logFactory = require('./logFactory.js'),
     {NeoPixelPRU} = require('./NeoPixel-PRU.js'),
+    {HSVtoRGB, RED, GREEN, BLUE} = require('./Color.js'),
     {setInterval} =  require('timers/promises');
 
 const DEFAULT_LOGGER = logFactory.create('CCKDisplay');
@@ -83,10 +84,19 @@ module.exports = class CCKDisplay{
         return this.segmentFlashing(CCKDisplay.scannerSegmentIndex, timeMs, r, g, b);
     }
 
-    async checkRetractTimer() {
-        //Countdown animation
-        //Animation goes from all Green to yellow to red. Red represents time out.
-        throw new Error('Not implemented');
+    async checkRetractTimer(timeMs) {
+        // Countdown animation
+        // Animation goes from all Green to yellow to red. Red represents time out.
+        let self = this;
+        for await (const startTimeMs of setInterval(100, Date.now())) {
+            let dt = Date.now() - startTimeMs;
+            if (dt >= timeMs) {
+                //self.allSegmentsOff();
+                break;
+            }
+            let rgb = CCKDisplay.fadeGreenDownToRed(dt/timeMs);
+            self.allSegmentsOn(RED(rgb), GREEN(rgb), BLUE(rgb));
+        }
     }
 
     async segmentFlashing(segmentIndex, timeMs, r, g, b) {
@@ -109,5 +119,9 @@ module.exports = class CCKDisplay{
     setSegment(index, r, g, b) {
         this.neopixelController.setSegment(index, r, g, b);
         return this;
+    }
+
+    static fadeGreenDownToRed(percentage) {
+        return HSVtoRGB(120*percentage/360, 1.0, 1.0);
     }
 };

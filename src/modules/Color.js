@@ -10,7 +10,7 @@ module.exports.Color = class Color{
     }
 };
 
-module.exports. HSVtoRGB = function HSVtoRGB(h, s, v) {
+module.exports.HSVtoRGB = function HSVtoRGB(h, s, v) {
     var r, g, b, i, f, p, q, t;
     i = Math.floor(h * 6);
     f = h * 6 - i;
@@ -27,3 +27,7 @@ module.exports. HSVtoRGB = function HSVtoRGB(h, s, v) {
     }
     return {r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255)};
 };
+
+module.exports.RED = function RED(color) { return (color & 0x0000FF00) >> 8; };
+module.exports.GREEN = function GREEN(color) { return (color & 0x00FF0000) >> 16; };
+module.exports.BLUE = function BLUE(color) { return (color & 0x000000FF) >> 0;};
