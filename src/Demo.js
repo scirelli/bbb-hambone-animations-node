@@ -64,16 +64,16 @@ module.exports = class Demo{
             self = this;
 
         timeMs = parseFloat(timeMs) || 0;
-        self.setSegment(segmentIndex, r, g, b);
+        self.cck.setSegment(segmentIndex, r, g, b);
         for await (const startTimeMs of setInterval(CCKDisplay.FLASH_RATE_MS, Date.now())) {
             on = !on;
 
             if ((Date.now() - startTimeMs) >= timeMs) {
-                self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
+                self.cck.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
                 break;
             }
-            if(on) self.setSegment(segmentIndex, r, g, b);
-            else self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
+            if(on) self.cck.setSegment(segmentIndex, r, g, b);
+            else self.cck.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
         }
     }
 };
