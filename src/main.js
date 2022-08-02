@@ -58,5 +58,8 @@ let cck = new CCKDisplay(config.cckConfig);
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tAnimation from all green to yellow to red as CCK counts down to retract check.');
         return cck.checkRetractTimer(TOTAL_ANIMATION_TIME);
+    },
+    async function() {
+        return setTimeout(TWO_SECONDS).then(cck.allSegmentsOff);
     }
 ].chain((f, i)=>f(i));
