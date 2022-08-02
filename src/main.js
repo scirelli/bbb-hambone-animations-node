@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('./Array.js');
+require('./modules/Array.js');
 const {setTimeout} =  require('timers/promises');
 const logFactory = require('./modules/logFactory.js'),
     CCKDisplay = require('./modules/CCKDisplay.js');
