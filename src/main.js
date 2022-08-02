@@ -59,7 +59,7 @@ let cck = new CCKDisplay(config.cckConfig);
         log.info('\tAnimation from all green to yellow to red as CCK counts down to retract check.');
         return cck.checkRetractTimer(TOTAL_ANIMATION_TIME);
     },
-    async function() {
-        return setTimeout(TWO_SECONDS).then(cck.allSegmentsOff);
+    async function Cleanup() {
+        return setTimeout(0).then(cck.allSegmentsOff);
     }
 ].chain((f, i)=>f(i));
