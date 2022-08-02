@@ -10,7 +10,9 @@ const config = require('../config.json');  //TODO: Convert main.js to use yargs
 
 //const DEV_FILE = '/dev/rpmsg_pru30';
 const TWO_SECONDS = 2 * 1000,
-    FIVE_SECONDS = 5 * 1000;
+    //FIVE_SECONDS = 5 * 1000,
+    TEN_SECONDS = 10 * 1000,
+    TOTAL_FLASH_TIME = TEN_SECONDS;
 
 config.cckConfig.logger = log;
 let cck = new CCKDisplay(config.cckConfig);
@@ -25,31 +27,31 @@ let cck = new CCKDisplay(config.cckConfig);
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tAll display segments flashing red.');
 
-        return cck.allErrorFlashing(FIVE_SECONDS);
+        return cck.allErrorFlashing(TOTAL_FLASH_TIME);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tDisplay segment flashing green.');
 
-        return cck.displayFlashing(0, 255, 0, FIVE_SECONDS);
+        return cck.displayFlashing(0, 255, 0, TOTAL_FLASH_TIME);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tScanner segment flashing green.');
 
-        return cck.scannerFlashing(0, 255, 0, FIVE_SECONDS);
+        return cck.scannerFlashing(0, 255, 0, TOTAL_FLASH_TIME);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tPresenter segment flashing green.');
 
-        return cck.presenterFlashing(0, 255, 0, FIVE_SECONDS);
+        return cck.presenterFlashing(0, 255, 0, TOTAL_FLASH_TIME);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tPresenter segment flashing yellow one second intervals. One second intervals is the default for flashing anyway.');
 
-        return cck.presenterFlashing(128, 128, 0, FIVE_SECONDS);
+        return cck.presenterFlashing(128, 128, 0, TOTAL_FLASH_TIME);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
