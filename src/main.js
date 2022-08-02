@@ -9,12 +9,12 @@ const DEV_FILE = '/dev/rpmsg_pru30';
 const commands = ['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0'];
 const file = fs.createWriteStream(DEV_FILE);
 
-['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0', '0 0 0 0', '1 0 0 0'].forEach(c=>{
+['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0', '0 0 0 0', '1 0 0 0', '-1 0 0 0'].forEach(c=>{
     file.write(c);
 });
 
 setTimeout(10000).then(()=>{
-    file.end();
+    file.end('2 0 0 255\03 128 128 0\0-1 0 0 0');
 });
 
 // commands.forEach(c => {
