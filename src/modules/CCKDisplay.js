@@ -97,7 +97,7 @@ module.exports = class CCKDisplay{
                 break;
             }
             let rgb = CCKDisplay.fadeGreenDownToRed(dt/timeMs);
-            self.allSegmentsOn(rgb.r, rgb.b. rgb.g);
+            self.allSegmentsOn(rgb.r, rgb.g, rgb.b);
         }
     }
 
