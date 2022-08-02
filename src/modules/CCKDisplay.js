@@ -102,7 +102,7 @@ module.exports = class CCKDisplay{
             else self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
 
             if ((Date.now() - startTimeMs) >= timeMs) {
-                self.allSegmentsOff();
+                self.setSegment(segmentIndex, ...CCKDisplay.COLORS.OFF);
                 break;
             }
         }

@@ -47,13 +47,13 @@ let cck = new CCKDisplay(config.cckConfig);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
-        log.info('\tPresenter segment flashing ywllow one second intervals. One second intervals is the default for flashing anyway.');
+        log.info('\tPresenter segment flashing yellow one second intervals. One second intervals is the default for flashing anyway.');
 
         return cck.presenterFlashing(128, 128, 0, FIVE_SECONDS);
     },
     async function(no) {
         log.info(`ATMOF-2159 Demo #${no}`);
         log.info('\tAnimation from all green to yellow to red as CCK counts down to retract check.');
-        return Promise.reject(new Error('Not implemented yet.'));
+        return cck.checkRetractTimer().catch(err=>{log.error(err);});
     }
-].chain(f=>f());
+].chain((f, i)=>f(i));
