@@ -1,19 +1,24 @@
 #!/usr/bin/env node
-const fs = require('fs'),
-    logFactory = require('./modules/logFactory.js'),
-    {setTimeout} =  require('timers/promises');
+const {setTimeout} =  require('timers/promises');
+const logFactory = require('./modules/logFactory.js'),
+    {NeoPixelPRU} = require('./modules/NeoPixel-PRU.js');
 
 
 const log = logFactory.create('BBB');
 const DEV_FILE = '/dev/rpmsg_pru30';
-const commands = ['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0'];
+//const DEV_FILE = '/tmp/rpmsg_pru30.txt';
 
-commands.forEach(c => {
-    fs.writeFileSync(DEV_FILE, c, {flag: 'w'});
+let np = new NeoPixelPRU({
+    fileName: DEV_FILE,
+    fileMode: 'a',
+    ledCount: 42,
+    logger: log
 });
 
-setTimeout(2000).then(()=>{
-    ['0 0 0 0', '1 0 0 0', '-1 0 0 0'].forEach(c=>{
-        fs.writeFileSync(DEV_FILE, c, {flag: 'w'});
-    });
+np.setColor(0, 255, 0, 0);
+np.draw();
+
+setTimeout(5000).then(()=>{
+    np.setColor(0, 0, 0, 0);
+    np.draw();
 });

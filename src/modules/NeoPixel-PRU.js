@@ -1,10 +1,11 @@
 const fs = require('fs'),
-    logFactory = require('./modules/logFactory.js'),
+    logFactory = require('./logFactory.js'),
     {setTimeout} =  require('timers/promises');
 
 
 const DEFAULT_LOGGER = logFactory.create('NEOPIXEL'),
     DEFAULT_LED_COUNT = 42,
+    DEFAULT_FILE_MODE = 'w',
     DEFAULT_DEV_FILE = '/dev/rpmsg_pru30',
     SEGMENT_COUNT = 4,
     SEGMENT_ALL = 0,
@@ -22,55 +23,76 @@ class Color {
     toString() {
         return `${Math.floor(this.r)} ${Math.floor(this.g)} ${Math.floor(this.b)}`;
     }
-}
+};
+module.exports.Color = Color;
 
-module.exports = class NeoPixelPRU {
+module.exports.NeoPixelPRU = class NeoPixelPRU {
+    static Color = Color;
+    static SEGMENT_COUNT = SEGMENT_COUNT;
+    static SEGMENT_ALL = SEGMENT_ALL;
+    static SEGMENT_ONE = SEGMENT_ONE;
+    static SEGMENT_TWO = SEGMENT_TWO;
+    static SEGMENT_THREE = SEGMENT_THREE;
+
     constructor(config) {
         this.fileName = config.fileName || DEFAULT_DEV_FILE;
+        this.fileMode = config.fileMode || DEFAULT_FILE_MODE;
         this.log = config.logger || DEFAULT_LOGGER;
         this.ledCount = parseInt(config.ledCount) || DEFAULT_LED_COUNT;
-        this.display = (new Array(this.ledCount)).fill(0).map(_=>new Color());
-        this.destinationBuffer = (new Array(this.ledCount)).fill(0).map(_=>new Color());
+
         this.colorDestinationBufferIndex = this.ledCount;
         this.segmentStartIndex = this.ledCount + this.ledCount;
         this.segmentOneIndex = this.segmentStartIndex;
     }
     
+    setLogger(logger) {
+        this.logger = logger;
+        return this;
+    }
+
     setColor(index, r, g, b) {
-        if(!this.isValidDisplayIndex()) {
+        if(!this.isValidDisplayIndex(index)) {
             this.log.warn(new Error('Index out of range.'));
             return this;
         }
         if(r instanceof Color){
             let c = r;
-            r = c.r; g = c.g; b = c.b;
+            r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
 
-        this.display[index].r = r;
-        this.display[index].g = g;
-        this.display[index].b = b;
+        this.write(`${index} ${r} ${g} ${b}`);
         return this;
     }
 
-    getColor(index) {
-        return this.display[index];
+    setDestinationColor(index, r, g, b) {
+        if(!this.isValidDisplayIndex(index)) {
+            this.log.warn(new Error('Index out of range.'));
+            return this;
+        }
+        if(r instanceof Color){
+            let c = r;
+            r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
+        }
+
+        this.write(`${this.colorDestinationBufferIndex + index} ${r} ${g} ${b}`);
+        return this;
     }
-    
-    setSegmentNow(index, r, g, b) {
-        if(!isValidSegmentIndex) {
-            this.log.warn(new Error('Invalid segment index');
+
+    setSegment(index, r, g, b) {
+        if(!isValidSegmentIndex(index)) {
+            this.log.warn(new Error('Invalid segment index'));
             return this;
         }
         if(r instanceof Color) {
             let c = r;
-            r = c.r; g = c.g; b = c.b;
+            r = Math.floor(c.r); g = Math.floor(c.g); b = Math.floor(c.b);
         }
-        fs.writeFileSync(this.fileName, `${index} ${r} ${g} ${b}`, {flag: 'w'});
+        this.write(`${index} ${r} ${g} ${b}`);
         return this;
     }
 
     isValidDisplayIndex(index) {
-        return index >= 0 && index < this.display.displayLength;
+        return index >= 0 && index < this.ledCount;
     }
 
     isValidSegmentIndex(index) {
@@ -78,15 +100,17 @@ module.exports = class NeoPixelPRU {
     }
 
     clear() {
-        fs.writeFileSync(this.fileName, '-2 0 0 0', {flag: 'w'});
+        this.write('-2 0 0 0');
         return this;
     }
 
     draw() {
-        display.forEach((color, index) => {
-            fs.writeFileSync(this.fileName, `${index} ${color}`, {flag: 'w'});
-        });
-        fs.writeFileSync(this.fileName, `-1 0 0 0`, {flag: 'w'});
+        this.write('-1 0 0 0');
+        return this;
+    }
+
+    write(str) {
+        fs.writeFileSync(this.fileName, str + '\n', {flag: this.fileMode});
         return this;
     }
 };
