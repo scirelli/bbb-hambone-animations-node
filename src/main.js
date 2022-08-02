@@ -2,12 +2,21 @@
 const fs = require('fs'),
     logFactory = require('./modules/logFactory.js');
 
+import { setTimeout } from 'timers/promises';
+
+
 const log = logFactory.create('BBB');
 const DEV_FILE = '/dev/rpmsg_pru30';
-const commands = ['0 255 0 0', '-1 0 0 0'];
+const commands = ['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0'];
 const file = fs.createWriteStream(DEV_FILE);
-file.write(commands[0]);
-file.end(commands[1]);
+
+['0 255 0 0', '-1 0 0 0', '1 0 255 0', '-1 0 0 0'].forEach(c=>{
+    file.write(c);
+});
+
+setTimeout(10000).then(()=>{
+    file.end();
+});
 
 // commands.forEach(c => {
 //     fs.writeFile(DEV_FILE, c, {flag: 'a'}, (err)=>{
