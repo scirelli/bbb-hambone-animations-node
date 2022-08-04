@@ -14,7 +14,12 @@ const DEFAULT_LOGGER = logFactory.create('NEOPIXEL'),
     SEGMENT_THREE = 3;      // Defined in PRU
 
 
+/*
+ * PRU driver
+ */
 module.exports.NeoPixelPRU = class NeoPixelPRU{
+    static FIRMWARE_VERSION = '1.x.x';      //Supported PRU firmware that this driver can interact with.
+
     static SEGMENT_COUNT = SEGMENT_COUNT;
     static SEGMENT_ALL = SEGMENT_ALL;
     static SEGMENT_ONE = SEGMENT_ONE;
@@ -33,7 +38,7 @@ module.exports.NeoPixelPRU = class NeoPixelPRU{
     }
 
     setLogger(logger) {
-        this.logger = logger;
+        this.log = logger;
         return this;
     }
 
